@@ -1,0 +1,54 @@
+**Lemma** 
+Let $P_1, \ldots, P_n$ be a sequence of $n$ pizzas, where pizza $P_i$ has cooking time $T_i$ for $1 \leq i \leq n$. Let $P_{i^*}$ be the pizza with (one of) the lowest cooking time $T_i$. Then there is an optimal ordering OPT of pizzas, so that $\frac{\sum_{i=1}^n W_i}{n}$ is minimized for this ordering, such that pizza $P_{i^*}$ is the first to be baked in OPT.
+
+**Proof**
+Consider an optimal solution OPT. If $P_{i^*}$ is the first pizza to be baked, we are done, so assume that $P_{i^*}$ is not the first to be baked in OPT. We show how we can transform OPT into OPT* with
+1) OPT* is a valid solution
+2) OPT* has $P_{i^*}$ as the first pizza to be baked
+3) average waiting time of OPT* $\leq$ average waiting time of OPT
+
+Let $P_j$ be the pizza that is baked first in OPT. Since this is the first pizza chosen, it contributes to every $W_i$ in $\sum\limits_{i=0}^{n}W_i$. Let us, w.l.o.g., say that pizza $P_{i^*}$ is chosen as the $l^{th}$ pizza to cook, thus NOT contributing to $\sum\limits_{i=0}^{l-1}W_i$ for the total sum. Let us break the sum down into three sections
+$$\begin{align}
+\sum\limits_{i=1}^{n}W_i &= \sum\limits_{i=1}^{l-1}W_i + \sum\limits_{i=l}^{n}W_i \\
+&= \sum\limits_{i=1}^{l-1}T_j + \sum\limits_{i=1}^{l-1}(W_i-T_j) + \sum\limits_{i=l}^{n}W_i \\
+&= (l-1)(T_j) + \sum\limits_{i=1}^{l-1}(W_i-T_j) + \sum\limits_{i=l}^{n}W_i \\
+&= (l-1)(T_j)+X+R
+\end{align}$$ 
+- $(l-1)(T_j)$ is the time of the first pizza up until $l$
+- $X$  is the part without the time from the first pizza up until $l$
+- $R$ is the rest of the sum
+
+Since we assumed that $P_{i^*}$ is not the first pizza to be baked, we know that $l \gt 1$. We now swap bake positions from pizzas $P_{i^*}$ and $P_j$ to receive OPT*. Since this does not affect part $X$ because the first pizza is not included, and also does not affect part $R$ since both pizzas are still in that part, only $(l-1)(T_j)$ changes to $(l-1)(T_{i^*})$. We know that $T_{i^*} \leq T_j$ because of our choice of $P_{i^*}$, so we can conclude that for any $l\gt1$, $(l-1)T_{i^*} \leq (l-1)T_j$. This makes $\sum\limits_{i=1}^{n}W_i^{OPT^*} \leq \sum\limits_{i=1}^{n}W_i^{OPT}$ . We have now proven that
+1) OPT* is still a valid permutation of baking order, and thus a valid solution,
+2) OPT* has $P_{i^*}$ as the first pizza to be baked, and
+3) the average waiting time of OPT* $\leq$ the average waiting time of OPT
+
+Thus we have proven our greedy choice lemma.
+
+
+**Lemma** 
+Let $$P_1, \ldots, P_n$$ be a sequence of $$n$$ pizzas, where pizza $$P_i$$ has cooking time $$T_i$$ for $$1 \leq i \leq n$$. Let $$P_{i^*}$$ be the pizza with (one of) the lowest cooking time $$T_i$$. Then there is an optimal ordering OPT of pizzas, so that $$\frac{\sum_{i=1}^n W_i}{n}$$ is minimized for this ordering, such that pizza $$P_{i^*}$$ is the first to be baked in OPT.
+
+**Proof**
+Consider an optimal solution OPT. If $$P_{i^*}$$ is the first pizza to be baked, we are done, so assume that $$P_{i^*}$$ is not the first to be baked in OPT. We show how we can transform OPT into OPT* with
+1) OPT* is a valid solution
+2) OPT* has $$P_{i^*}$$ as the first pizza to be baked
+3) average waiting time of OPT* $$\leq$$ average waiting time of OPT
+
+Let $$P_j$$ be the pizza that is baked first in OPT. Since this is the first pizza chosen, it contributes to every $$W_i$$ in $$\sum\limits_{i=0}^{n}W_i$$. Let us, w.l.o.g., say that pizza $$P_{i^*}$$ is chosen as the $$l^{th}$$ pizza to cook, thus NOT contributing to $$\sum\limits_{i=0}^{l-1}W_i$$ for the total sum. Let us break the sum down into three sections
+$$\begin{align}
+\sum\limits_{i=1}^{n}W_i &= \sum\limits_{i=1}^{l-1}W_i + \sum\limits_{i=l}^{n}W_i \\
+&= \sum\limits_{i=1}^{l-1}T_j + \sum\limits_{i=1}^{l-1}(W_i-T_j) + \sum\limits_{i=l}^{n}W_i \\
+&= (l-1)(T_j) + \sum\limits_{i=1}^{l-1}(W_i-T_j) + \sum\limits_{i=l}^{n}W_i \\
+&= (l-1)(T_j)+X+R
+\end{align}$$ 
+- $$(l-1)(T_j)$$ is the time of the first pizza up until $$l$$
+- $$X$$  is the part without the time from the first pizza up until $$l$$
+- $$R$$ is the rest of the sum
+
+Since we assumed that $$P_{i^*}$$ is not the first pizza to be baked, we know that $$l \gt 1$$. We now swap bake positions from pizzas $$P_{i^*}$$ and $$P_j$$ to receive OPT*. Since this does not affect part $$X$$ because the first pizza is not included, and also does not affect part $$R$$ since both pizzas are still in that part, only $$(l-1)(T_j)$$ changes to $$(l-1)(T_{i^*})$$. We know that $$T_{i^*} \leq T_j$$ because of our choice of $$P_{i^*}$$, so we can conclude that for any $$l\gt1$$, $$(l-1)T_{i^*} \leq (l-1)T_j$$. This makes $$\sum\limits_{i=1}^{n}W_i^{OPT^*} \leq \sum\limits_{i=1}^{n}W_i^{OPT}$$ . We have now proven that
+1) OPT* is still a valid permutation of baking order, and thus a valid solution,
+2) OPT* has $$P_{i^*}$$ as the first pizza to be baked, and
+3) the average waiting time of OPT* $$\leq$$ the average waiting time of OPT
+
+Thus we have proven our greedy choice lemma.

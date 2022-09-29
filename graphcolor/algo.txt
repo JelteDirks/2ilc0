@@ -1,0 +1,95 @@
+ge need to find the smallest amount of colors to color each node in a graph
+without two adjacent nodes having the same color. To accomplish this, we need
+to at least keep track of the nodes that are already colored, and which color
+they have. This can be done with a simple HashMap. To know which choice we have
+to make, we can use all the keys in the hashmap to know which nodes still have
+to be colored. We also need to keep track of the minimum coloring size we have
+seen once we have colored all nodes. We also keep track of the amount of nodes
+colored in already, so we don't have to calculate that every call.
+
+The choice that has to be made is which color to give to a node. Once the
+choice has been made, the algorithm can call itself recursively. Decreasing the
+amount of node that have to be colored and adding the color to the color book.
+
+Algorithm Chromatic(A, min_colors, ...)
+if A is fully colored
+  then min_colors = min(min_colors, colors(A))
+  else min_colors = infinity
+    uncolored = find_uncolored(A) // find all uncolored nodes
+    colors = get_used_colors(A) // find all colors used
+    for each node i in uncolored // loop all uncolored nodes
+      do c = find color that fits i // find a color for this node (preferably existing)
+        color i with c // color the new node
+        min_colors = min(min_colors, Chromatic(...)) // calculate the min_colors
+        remove color c from i // undo the coloring
+return min_colors
+
+
+-----------------------
+LinkedList[] A: the array of linked lists that contain the edges between the
+                nodes of the graph
+
+int minColors:  the lowest chromatic number of the graph so far
+
+int[] book: the colors that are assigned to the nodes. book[i] = j means that
+node i has color j
+
+int colored: the nodes that are already colored
+
+int c: the amount of colors used
+
+Chromatic(A, min_colors, book, colored, c)
+if size(A) = size(colored)
+  then min_colors <- min(min_colors, c)
+  else min_colors <- infinity
+    node_set <- Set(keys(A)) \ colored 
+    for each node i in node_set
+      do color_set <- Set(values(book)) 
+        for each neighbor j in A[i] 
+          do color_set <- color_set \ { book[j] } 
+        for each color k in color_set
+          do book[i] <- k 
+            colored <- colored union {i}
+            min_colors <- min(min_colors, Chromatic(A, min_colors, book, colored, c) 
+            colored <- colored \ {i} 
+            book[i] <- 0 
+        c <- c + 1 
+        book[i] <- c 
+        colored <- colored union {i} 
+        min_colors <- min(min_colors, Chromatic(A, min_colors, book, colored, c) 
+        book[i] <- 0 
+        colored <- colored \ {i} 
+        c <- c - 1 
+return min_colors 
+
+The parameters are:
+
+
+Chromatic(A, min_colors, book, colored, c)
+if size(A) = size(colored)
+  then min_colors <- min(min_colors, c) // c should be set properly at start!
+  else min_colors <- infinity // init the minimum colors
+    node_set <- Set(keys(A)) \ colored // remove the already colored nodes
+    for each node i in node_set // iterate over the uncolored nodes
+      do color_set <- Set(values(book)) // set is automatically unique
+        for each neighbor j in A[i] // iterate over the linked list of neighbors
+          do color_set <- color_set \ { book[j] } // remove the color from possible colors
+        for each color k in color_set // iterate over existing colors
+          do book[i] <- k // color the node with this color
+            colored <- colored union {i} // add this node to the colored node set
+            min_colors <- min(min_colors, Chromatic(A, min_colors, book, colored, c) // call recursively with one less node to color, c is already correctly set
+            colored <- colored \ {i} // remove this node from the colored node set
+            book[i] <- 0 // remove the coloring in the book
+        // now try with a new color
+        c <- c + 1 // increment the amount of colors needed
+        book[i] <- c // set the color for this node (new color)
+        colored <- colored union {i} // mark this node as colored
+        min_colors <- min(min_colors, Chromatic(A, min_colors, book, colored, c) // call recursively with one more color and one node extra colored
+        book[i] <- 0 // uncolor this node
+        colored <- colored \ {i} // remove this node from colored set
+        c <- c - 1 // decrement the amount of colors needed 
+return min_colors // return the minimum amount of colors needed
+
+
+
+

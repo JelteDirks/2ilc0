@@ -1,0 +1,4 @@
+For the brute force method, we have to every coloring option from k = 1 up to
+and including k = |V|.
+
+

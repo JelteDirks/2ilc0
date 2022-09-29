@@ -1,0 +1,31 @@
+SIMPLE-RUMMY(R,B,G):
+  table <- 3D array with dimensions [R.length + 1, B.length + 1, G.length + 1]
+  table[0][0][0] <- true;
+  table[0][0][1] <- false;
+  table[0][1][0] <- false;
+  table[0][1][1] <- false;
+  table[1][0][0] <- false;
+  table[1][0][1] <- false;
+  table[1][1][0] <- false;
+  for i <- 1 to R.length + 1 do
+    for j <- 1 to B.length + 1 do
+      for k <- 1 to G.length + 1 do
+        if R[i] = B[j] and B[j] = G[k]
+          then table[i][j][k] <- table[i-1][j-1][k-1]
+        
+        x <- 1
+        while x <= (i - 2) and table[i][j][k] = false do
+          table[i][j][k] <- table[x-1][j][k] && validRun(x,i,R)
+          x <- x + 1
+ 
+        x <- 1
+        while x <= (j - 2) and table[i][j][k] = false do
+          table[i][j][k] <- table[i][x-1][k] && validRun(x,j,B)
+          x <- x + 1
+ 
+        x <- 1
+        while x <= (k - 2) and table[i][j][k] = false do
+          table[i][j][k] <- table[i][j][x-1] && validRun(x,k,G)
+          x <- x + 1
+        
+  return table[R.length][B.length][G.length]
