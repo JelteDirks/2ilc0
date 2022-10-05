@@ -1,0 +1,11 @@
+{
+  "name": "path-matrix",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "matrix-js": "^1.6.1",
+    "matrix-multiplication": "^0.5.2"
+  }
+}

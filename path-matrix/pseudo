@@ -1,0 +1,11 @@
+k-PATH-MATRIX(G,k):
+  P <- deep_clone(G) // make a deep clone of G
+  while k > 1 do
+    if k = 0 mod 2 // if k is a mulitple of 2
+      then k <- k / 2 // divide k by 2
+        P <- Matrix-Multiply(P,P) // square the P matrix
+      else k <- k - 1 // if k is not a multiple, reduce by 1 first
+        k <- k / 2 // then divide by 2
+        P <- Matrix-Multiply(Matrix-Multiply(P,G),P) // then multiply by the original and square
+  return P // when k = 1, P is G^k
+
