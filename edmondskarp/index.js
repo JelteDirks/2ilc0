@@ -2,11 +2,13 @@ function find_augmenting_path(G, s, t) {
   let Q = [[s]]
   while (Q.length > 0) {
     let next = Q.shift();
-    let last = next[next.length - 1]
-    console.log("last",last);
-    if (last === t) {
-      console.log("path", next);
+    if (next.length > G.length) {
+      console.log("max simple path length exceeded, stop");
       break;
+    }
+    let last = next[next.length - 1]
+    if (last === t) {
+      return [...next];
     }
     for (let i = 0 ; i < G[last].length; i++) {
       if (G[last][i] < Infinity) {
@@ -54,4 +56,19 @@ function key(u,v) {
   return "u=" + u + " v=" + v;
 }
 
-find_augmenting_path(G, 0, 10);
+for (let i = 0 ; i < 5; i++) {
+  let path = find_augmenting_path(G, 0, 10)
+  if (!path) {
+    console.log("done");
+    break;
+  }
+  console.log(path);
+  while (path.length > 1) {
+    let [u,v] = [path[0],path[1]]
+    G[u][v] = Infinity
+    G[v][u] = 1
+    path.shift();
+  }
+}
+
+
